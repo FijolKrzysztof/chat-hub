@@ -1,27 +1,87 @@
-# ChatHub
+# ChatHub - Real-time Chat Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.10.
+ChatHub is a modern, responsive chat application built with Angular and Tailwind CSS. It features a sleek dark mode interface, real-time messaging, and multiple chat channels.
 
-## Development server
+## Demo
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+🌐 [Live Demo](https://fijolkrzysztof.github.io/chat-hub/)
 
-## Code scaffolding
+## Features
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- 🌗 Modern dark mode interface
+- 💬 Multiple chat channels with different topics
+- 🎨 Sleek animations and transitions
+- 😊 Emoji support
+- 📸 Image sharing capabilities
+- 📍 Message pinning functionality
+- 🔍 Real-time chat search
+- 📱 Fully responsive design
+- ⚡ Instant message responses
+- 🖥️ Expandable view mode
 
-## Build
+## Technologies Used
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Angular 18
+- Tailwind CSS
+- TypeScript
+- RxJS
 
-## Running unit tests
+## Getting Started
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Prerequisites
 
-## Running end-to-end tests
+- Node.js (v20 or higher)
+- npm (v10 or higher)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Installation
 
-## Further help
+1. Clone the repository
+```bash
+git clone https://github.com/fijolkrzysztof/chathub.git
+cd chathub
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+2. Install dependencies
+```bash
+npm install
+```
+
+3. Start the development server
+```bash
+ng serve
+```
+
+4. Open your browser and navigate to `http://localhost:4200`
+
+## Features in Detail
+
+### Chat Channels
+- Multiple themed channels for different topics
+- Unread message indicators
+- Channel-specific responses
+- Real-time message updates
+
+### Message Features
+- Text messages with emoji support
+- Image sharing
+- Message pinning
+- Message deletion
+- Typing indicators
+- Automatic responses
+
+### UI/UX
+- Expandable chat window
+- Smooth animations
+- Real-time search functionality
+- Responsive design for all screen sizes
+- Custom scrollbar styling
+
+### State Management
+- Reactive state handling with RxJS
+- Persistent chat history
+- Real-time updates
+- Efficient message delivery
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
