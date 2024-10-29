@@ -1,0 +1,78 @@
+<div class="p-4 flex flex-col h-full">
+  <div class="relative mb-4 flex-shrink-0">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (ngModelChange)="onSearchChange($event)"
+      placeholder="Search chats..."
+      class="w-full px-4 py-2 pl-10 bg-slate-800 border-0 text-slate-200 placeholder-slate-500 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+    />
+    <app-icon
+      [icon]="icons.searchIcon"
+      className="absolute left-3 top-2.5 w-4 h-4 text-slate-500"
+    />
+  </div>
+
+  <div class="space-y-2 overflow-y-auto flex-1 pr-2 custom-scrollbar">
+    @for (chat of filteredChats$ | async; track chat.id) {
+      <button
+        (click)="onChatSelect(chat)"
+        [class]="'w-full p-3 rounded-md transition-all ' +
+              ((activeChat$ | async)?.id === chat.id
+                ? 'bg-blue-600 text-white'
+                : 'hover:bg-slate-800 text-slate-300')"
+      >
+        <div class="flex items-center gap-3">
+          <div [class]="'w-10 h-10 rounded-md flex items-center justify-center ' +
+                ((activeChat$ | async)?.id === chat.id
+                  ? 'bg-white/20'
+                  : 'bg-slate-800')"
+          >
+            <app-icon
+              [icon]="icons.hashIcon"
+              [class]="'w-5 h-5 ' +
+                    ((activeChat$ | async)?.id === chat.id
+                      ? 'text-white'
+                      : 'text-slate-400')"
+            />
+          </div>
+          <div class="flex-1 text-left">
+            <div class="flex items-center justify-between">
+                  <span class="font-medium">
+                    @if(searchQuery) {
+                      <span [innerHTML]="highlightMatch(chat.name)"></span>
+                    } @else {
+                      {{chat.name}}
+                    }
+                  </span>
+              @if (chat.unread > 0 && (activeChat$ | async)?.id !== chat.id) {
+                <span class="px-2 py-1 text-xs bg-blue-500 text-white rounded-full">
+                      {{chat.unread}}
+                    </span>
+              }
+            </div>
+            <div [class]="'text-sm ' +
+                  ((activeChat$ | async)?.id === chat.id
+                    ? 'text-blue-100'
+                    : 'text-slate-500')"
+            >
+              @if(searchQuery) {
+                <span [innerHTML]="highlightMatch(chat.description)"></span>
+              } @else {
+                {{chat.description}}
+              }
+            </div>
+          </div>
+        </div>
+      </button>
+    } @empty {
+      <div class="text-slate-500 text-center py-4">
+        @if(searchQuery) {
+          No chats found matching "{{searchQuery}}"
+        } @else {
+          No chats available
+        }
+      </div>
+    }
+  </div>
+</div>
