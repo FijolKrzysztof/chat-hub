@@ -37,7 +37,7 @@ ChatHub is a modern, responsive chat application built with Angular and Tailwind
 
 1. Clone the repository
 ```bash
-git clone https://github.com/fijolkrzysztof/chathub.git
+git clone https://github.com/fijolkrzysztof/chat-hub.git
 cd chathub
 ```
 
