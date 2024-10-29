@@ -38,7 +38,7 @@ ChatHub is a modern, responsive chat application built with Angular and Tailwind
 1. Clone the repository
 ```bash
 git clone https://github.com/fijolkrzysztof/chat-hub.git
-cd chathub
+cd chat-hub
 ```
 
 2. Install dependencies
@@ -51,7 +51,7 @@ npm install
 ng serve
 ```
 
-4. Open your browser and navigate to `http://localhost:4200`
+4. Open your browser and navigate to `http://localhost:4200/chat-hub`
 
 ## Features in Detail
 
