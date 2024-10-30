@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnDestroy, Signal, viewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnDestroy, signal, Signal, viewChild } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MessageComponent } from '../message/message.component';
@@ -24,7 +24,7 @@ import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
   templateUrl: 'chat-hub.component.html',
 })
 export class ChatHubComponent implements OnDestroy {
-  private readonly chatService = inject(ChatService);
+  readonly chatService = inject(ChatService);
 
   messagesEnd: Signal<ElementRef | undefined> = viewChild('messagesEnd');
   messageInput: Signal<ElementRef | undefined> = viewChild('messageInput');
@@ -35,6 +35,7 @@ export class ChatHubComponent implements OnDestroy {
   isTyping$ = this.chatService.getIsTyping();
   message = '';
   icons = IconsComponent;
+  showSidebar = signal(false);
 
   private scrollSub = this.chatService.getScrollToBottom().subscribe(shouldScroll => {
     if (shouldScroll) {
@@ -44,6 +45,10 @@ export class ChatHubComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.scrollSub.unsubscribe();
+  }
+
+  toggleSidebar(): void {
+    this.showSidebar.update(v => !v);
   }
 
   onEmojiSelect(emoji: string) {
@@ -61,10 +66,6 @@ export class ChatHubComponent implements OnDestroy {
         inputElement.focus();
       });
     }
-  }
-
-  showEmojiPicker(): void {
-    this.chatService.triggerEmojiPicker();
   }
 
   scrollToBottom(): void {

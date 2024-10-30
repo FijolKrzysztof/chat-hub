@@ -1,53 +1,47 @@
-<div class="max-h-screen min-h-screen bg-slate-950 p-4 md:p-8 overflow-hidden">
+<div class="max-h-screen min-h-screen bg-slate-950 p-2 md:p-4 lg:p-8 overflow-hidden">
   <div class="relative max-w-[1400px] mx-auto w-full">
-    <div [class]="isExpanded ? 'h-[calc(100vh-4rem)]' : 'h-[600px]'" class="transition-all duration-300">
-      <button
-        (click)="toggleExpand()"
-        class="absolute right-4 top-4 z-10 p-2 rounded-lg bg-slate-700/50 text-slate-300 hover:bg-slate-600/50 hover:text-white transition-colors"
-      >
-        <app-icon
-          [icon]="isExpanded ? icons.minimizeIcon : icons.maximizeIcon"
-          className="w-5 h-5"
-        />
-      </button>
+    <div
+      [class]="(isExpanded$ | async) ? 'h-[calc(100vh-1rem)] md:h-[calc(100vh-2rem)] lg:h-[calc(100vh-4rem)]' : 'h-[600px]'"
+      class="transition-all duration-300"
+    >
       <app-chat-hub class="h-full" />
     </div>
   </div>
 
   <div
-    class="max-w-[1400px] mx-auto w-full transition-all duration-300 transform mt-8"
-    [class.translate-y-0]="!isExpanded"
-    [class.opacity-100]="!isExpanded"
-    [class.translate-y-full]="isExpanded"
-    [class.opacity-0]="isExpanded"
+    class="max-w-[1400px] mx-auto w-full transition-all duration-300 transform mt-4 md:mt-8"
+    [class.translate-y-0]="!(isExpanded$ | async)"
+    [class.opacity-100]="!(isExpanded$ | async)"
+    [class.translate-y-full]="isExpanded$ | async"
+    [class.opacity-0]="isExpanded$ | async"
   >
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="p-6 rounded-lg bg-slate-800/50 border border-slate-700/50 backdrop-blur">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+      <div class="p-4 md:p-6 rounded-lg bg-slate-800/50 border border-slate-700/50 backdrop-blur">
         <div class="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4">
           <app-icon [icon]="icons.channelsIcon" className="w-6 h-6 text-blue-500" />
         </div>
         <h3 class="text-lg font-semibold text-white mb-2">Multiple Channels</h3>
-        <p class="text-slate-400">Organize discussions by topic in dedicated channels. Keep conversations focused and relevant.</p>
+        <p class="text-slate-400 text-sm md:text-base">Organize discussions by topic in dedicated channels. Keep conversations focused and relevant.</p>
       </div>
 
-      <div class="p-6 rounded-lg bg-slate-800/50 border border-slate-700/50 backdrop-blur">
+      <div class="p-4 md:p-6 rounded-lg bg-slate-800/50 border border-slate-700/50 backdrop-blur">
         <div class="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-4">
           <app-icon [icon]="icons.realtimeIcon" className="w-6 h-6 text-emerald-500" />
         </div>
         <h3 class="text-lg font-semibold text-white mb-2">Real-time Chat</h3>
-        <p class="text-slate-400">Instant messaging with real-time responses. Share text, emojis, and images seamlessly.</p>
+        <p class="text-slate-400 text-sm md:text-base">Instant messaging with real-time responses. Share text, emojis, and images seamlessly.</p>
       </div>
 
-      <div class="p-6 rounded-lg bg-slate-800/50 border border-slate-700/50 backdrop-blur">
+      <div class="p-4 md:p-6 rounded-lg bg-slate-800/50 border border-slate-700/50 backdrop-blur">
         <div class="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4">
           <app-icon [icon]="icons.secureIcon" className="w-6 h-6 text-purple-500" />
         </div>
         <h3 class="text-lg font-semibold text-white mb-2">Secure & Private</h3>
-        <p class="text-slate-400">End-to-end encrypted messages. Your conversations stay private and secure at all times.</p>
+        <p class="text-slate-400 text-sm md:text-base">End-to-end encrypted messages. Your conversations stay private and secure at all times.</p>
       </div>
     </div>
 
-    <div class="mt-8 text-center text-sm text-slate-500">
+    <div class="mt-4 md:mt-8 text-center text-xs md:text-sm text-slate-500">
       Built with Angular & Tailwind CSS • Open Source on GitHub
     </div>
   </div>

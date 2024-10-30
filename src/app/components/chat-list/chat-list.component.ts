@@ -14,7 +14,7 @@ import { map } from 'rxjs/operators';
   templateUrl: 'chat-list.component.html',
 })
 export class ChatListComponent {
-  private readonly chatService = inject(ChatService);
+  readonly chatService = inject(ChatService);
 
   chats$ = this.chatService.getChats();
   activeChat$ = this.chatService.getActiveChat();

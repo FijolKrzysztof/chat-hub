@@ -3,11 +3,12 @@ import { ChatHubComponent } from './components/chat-hub/chat-hub.component';
 import { Component, inject, OnInit } from '@angular/core';
 import { IconComponent } from './components/icon/icon.component';
 import { ChatService } from './services/chat.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ChatHubComponent, IconComponent],
+  imports: [ChatHubComponent, IconComponent, AsyncPipe],
   templateUrl: 'app.component.html',
   styles: [`
     :host {
@@ -18,16 +19,12 @@ import { ChatService } from './services/chat.service';
   `]
 })
 export class AppComponent implements OnInit {
-  private readonly chatService = inject(ChatService);
+  readonly chatService = inject(ChatService);
 
-  isExpanded = false;
+  isExpanded$ = this.chatService.getIsExpanded();
   icons = IconsComponent;
 
   ngOnInit() {
     this.chatService.startSpamBot();
-  }
-
-  toggleExpand(): void {
-    this.isExpanded = !this.isExpanded;
   }
 }

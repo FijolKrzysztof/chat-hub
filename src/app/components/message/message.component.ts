@@ -12,7 +12,7 @@ import { ChatService } from '../../services/chat.service';
   imports: [IconComponent, DatePipe],
   template: `
     <div [class]="'flex ' + (isOwnMessage() ? 'justify-end' : 'justify-start')">
-      <div class="max-w-[80%] group">
+      <div class="max-w-[85%] md:max-w-[80%] group">
         <div [class]="'flex items-center gap-2 mb-1 ' +
           (isOwnMessage() ? 'justify-end' : 'justify-start')">
           <span class="text-sm font-medium text-slate-300">{{ message().userId }}</span>
@@ -47,8 +47,8 @@ import { ChatService } from '../../services/chat.service';
   `
 })
 export class MessageComponent {
-  private readonly sanitizer = inject(DomSanitizer);
-  private readonly chatService = inject(ChatService);
+  readonly sanitizer = inject(DomSanitizer);
+  readonly chatService = inject(ChatService);
 
   message = input.required<Message>();
   isOwnMessage = input.required<boolean>();

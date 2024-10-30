@@ -14,11 +14,20 @@ export class ChatService {
 
   private readonly scrollToBottom = new BehaviorSubject<boolean>(false);
   private readonly isTyping = new BehaviorSubject<boolean>(false);
-  private readonly showEmojiPicker = new BehaviorSubject<boolean>(false);
+  private readonly emojiPickerVisible = new BehaviorSubject<boolean>(false);
   private readonly chats = new BehaviorSubject<Chat[]>(CHAT_DATA);
   private readonly activeChat = new BehaviorSubject<Chat>(CHAT_DATA[0]);
   private readonly user = new BehaviorSubject<User>(this.DEFAULT_USER);
   private readonly pinnedMessage = new BehaviorSubject<Message | null>(null);
+  private readonly isExpanded = new BehaviorSubject<boolean>(false);
+
+  getIsExpanded(): Observable<boolean> {
+    return this.isExpanded.asObservable();
+  }
+
+  toggleExpand(): void {
+    this.isExpanded.next(!this.isExpanded.value);
+  }
 
   getScrollToBottom(): Observable<boolean> {
     return this.scrollToBottom.asObservable();
@@ -29,13 +38,12 @@ export class ChatService {
     setTimeout(() => this.scrollToBottom.next(false), 100);
   }
 
-  getShowEmojiPicker(): Observable<boolean> {
-    return this.showEmojiPicker.asObservable();
+  getEmojiPickerVisible(): Observable<boolean> {
+    return this.emojiPickerVisible.asObservable();
   }
 
-  triggerEmojiPicker(): void {
-    this.showEmojiPicker.next(true);
-    setTimeout(() => this.showEmojiPicker.next(false), 100);
+  setEmojiPickerVisible(visible: boolean): void {
+    this.emojiPickerVisible.next(visible);
   }
 
   getChats(): Observable<Chat[]> {

@@ -1,6 +1,41 @@
-<div class="flex bg-slate-800 rounded-lg overflow-hidden shadow-xl border border-slate-700 h-full">
+<div class="relative flex flex-col md:flex-row bg-slate-800 rounded-lg overflow-hidden shadow-xl border border-slate-700 h-full">
+  <button
+    (click)="chatService.toggleExpand()"
+    class="absolute right-4 top-4 z-10 p-2 rounded-lg bg-slate-700/50 text-slate-300 hover:bg-slate-600/50 hover:text-white transition-colors hidden md:block"
+  >
+    <app-icon
+      [icon]="(chatService.getIsExpanded() | async) ? icons.minimizeIcon : icons.maximizeIcon"
+      className="w-5 h-5"
+    />
+  </button>
+
+  <!-- Mobile Header -->
+  <div class="h-16 md:hidden bg-slate-900 border-b border-slate-700 flex items-center justify-between px-4">
+    <div class="flex items-center">
+      <button
+        (click)="toggleSidebar()"
+        class="p-2 text-slate-400 hover:text-slate-300"
+      >
+        <app-icon [icon]="icons.menuIcon" className="w-5 h-5"/>
+      </button>
+      <span class="ml-3 text-white font-medium">{{ (activeChat$ | async)?.name }}</span>
+    </div>
+    <button
+      (click)="chatService.toggleExpand()"
+      class="md:hidden p-2 text-slate-400 hover:text-slate-300"
+    >
+      <app-icon
+        [icon]="(chatService.getIsExpanded() | async) ? icons.minimizeIcon : icons.maximizeIcon"
+        className="w-5 h-5"
+      />
+    </button>
+  </div>
+
   <!-- Sidebar -->
-  <div class="w-72 bg-slate-900 border-r border-slate-700 flex flex-col overflow-hidden">
+  <div
+    [class.hidden]="!showSidebar()"
+    class="md:w-72 bg-slate-900 border-b md:border-b-0 md:border-r border-slate-700 flex flex-col overflow-hidden md:block"
+  >
     <div class="flex-shrink-0 p-4 border-b border-slate-700">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center">
@@ -15,15 +50,17 @@
         </div>
       </div>
     </div>
-
-    <app-chat-list class="flex-1 overflow-hidden"/>
+    <app-chat-list class="flex-1 overflow-hidden" />
   </div>
 
   <!-- Main Content -->
-  <div class="flex-1 flex flex-col bg-slate-800">
-    <!-- Header -->
-    <div class="bg-slate-900 border-b border-slate-700">
-      <div class="p-4">
+  <div class="flex-1 flex flex-col bg-slate-800 min-h-0 md:min-h-full">
+    <!-- Header - ukryty na mobile gdy sidebar otwarty -->
+    <div
+      [class.hidden]="showSidebar()"
+      class="bg-slate-900 border-b border-slate-700 md:block"
+    >
+      <div class="p-3 md:p-4">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-md bg-blue-600 flex items-center justify-center">
@@ -56,8 +93,8 @@
     </div>
 
     <!-- Messages -->
-    <div class="flex-1 overflow-y-auto p-4 custom-scrollbar">
-      <div class="max-w-3xl mx-auto space-y-4">
+    <div class="flex-1 overflow-y-auto p-2 md:p-4 custom-scrollbar">
+      <div class="max-w-3xl mx-auto space-y-3 md:space-y-4">
         @for (msg of (activeChat$ | async)?.messages; track msg.id) {
           <app-message
             [message]="msg"
@@ -77,8 +114,8 @@
     </div>
 
     <!-- Input -->
-    <form (ngSubmit)="handleSubmit()" class="p-4 bg-slate-900 border-t border-slate-700">
-      <div class="max-w-3xl mx-auto flex gap-3">
+    <form (ngSubmit)="handleSubmit()" class="p-2 md:p-4 bg-slate-900 border-t border-slate-700">
+      <div class="max-w-3xl mx-auto flex gap-2 md:gap-3">
         <div class="flex-1 relative">
           <input
             #messageInput
@@ -87,25 +124,25 @@
             name="message"
             autocomplete="off"
             placeholder="Type a message..."
-            class="w-full px-4 py-2.5 bg-slate-800 border-0 text-slate-200 placeholder-slate-500 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            class="w-full px-3 md:px-4 py-2 md:py-2.5 bg-slate-800 border-0 text-slate-200 placeholder-slate-500 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm md:text-base"
           />
-          <div class="absolute right-2 top-2 flex gap-1">
+          <div class="absolute right-2 top-1.5 md:top-2 flex gap-1">
             <button
               type="button"
               class="p-1 text-slate-400 hover:text-slate-300"
-              (click)="showEmojiPicker()"
+              (click)="chatService.setEmojiPickerVisible(true)"
             >
-              <app-icon [icon]="icons.smileIcon" className="w-5 h-5"/>
+              <app-icon [icon]="icons.smileIcon" className="w-4 h-4 md:w-5 md:h-5"/>
             </button>
             <button
               type="button"
               class="p-1 text-slate-400 hover:text-slate-300"
               (click)="addImage()"
             >
-              <app-icon [icon]="icons.imageIcon" className="w-5 h-5"/>
+              <app-icon [icon]="icons.imageIcon" className="w-4 h-4 md:w-5 md:h-5"/>
             </button>
             <button type="button" class="p-1 text-slate-400 hover:text-slate-300">
-              <app-icon [icon]="icons.paperclipIcon" className="w-5 h-5"/>
+              <app-icon [icon]="icons.paperclipIcon" className="w-4 h-4 md:w-5 md:h-5"/>
             </button>
           </div>
 
@@ -113,9 +150,9 @@
         </div>
         <button
           type="submit"
-          class="px-4 py-2.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900"
+          class="px-3 md:px-4 py-2 md:py-2.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900"
         >
-          <app-icon [icon]="icons.sendIcon" className="w-5 h-5"/>
+          <app-icon [icon]="icons.sendIcon" className="w-4 h-4 md:w-5 md:h-5"/>
         </button>
       </div>
     </form>
