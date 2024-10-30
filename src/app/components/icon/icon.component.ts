@@ -15,4 +15,3 @@ export class IconComponent {
 
   className = input('');
 }
-
