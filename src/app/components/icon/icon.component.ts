@@ -4,7 +4,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 @Component({
   selector: 'app-icon',
   standalone: true,
-  template: '<span class="flex items-center" [innerHTML]="icon()" [class]="className()"></span>'
+  template: '<span class="flex" [innerHTML]="icon()" [class]="className()"></span>'
 })
 export class IconComponent {
   readonly sanitizer = inject(DomSanitizer);
