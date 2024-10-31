@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnInit, signal, Signal, viewChild } from '@angular/core';
+import { Component, effect, ElementRef, inject, signal, Signal, viewChild } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MessageComponent } from '../message/message.component';
@@ -8,7 +8,6 @@ import { IconsComponent } from '../icons/icons.component';
 import { ChatService } from '../../services/chat.service';
 import { TypingIndicatorComponent } from '../typing-indicator/typing-indicator.component';
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-chat-hub',
@@ -24,13 +23,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   ],
   templateUrl: 'chat-hub.component.html',
 })
-export class ChatHubComponent implements OnInit {
+export class ChatHubComponent {
   readonly chatService = inject(ChatService);
 
   messagesEnd: Signal<ElementRef | undefined> = viewChild('messagesEnd');
   messageInput: Signal<ElementRef | undefined> = viewChild('messageInput');
-
-  private readonly destroy$ = takeUntilDestroyed();
 
   user$ = this.chatService.getUser();
   activeChat$ = this.chatService.getActiveChat();
@@ -42,13 +39,13 @@ export class ChatHubComponent implements OnInit {
 
   readonly Icons = IconsComponent;
 
-  ngOnInit() {
-    this.chatService.getScrollToBottom().pipe(
-      this.destroy$,
-    ).subscribe(shouldScroll => {
-      if (shouldScroll) {
-        this.scrollToBottom();
-      }
+  constructor() {
+    effect(() => {
+      this.chatService.getScrollToBottom().subscribe(shouldScroll => {
+        if (shouldScroll) {
+          this.scrollToBottom();
+        }
+      });
     });
   }
 
