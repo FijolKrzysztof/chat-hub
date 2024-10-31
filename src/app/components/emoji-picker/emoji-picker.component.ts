@@ -1,29 +1,26 @@
-import { Component, ElementRef, inject, OnDestroy, OnInit, output, viewChild } from '@angular/core';
-import { ChatService } from '../../services/chat.service';
+import { Component, ElementRef, OnDestroy, OnInit, output, viewChild } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-emoji-picker',
   standalone: true,
   template: `
-    @if (chatService.getEmojiPickerVisible() | async) {
-      <div
-        #container
-        class="p-2 bg-slate-800 rounded-lg shadow-xl border border-slate-700"
-      >
-        <div class="grid grid-cols-8 gap-1">
-          @for (emoji of emojis; track emoji) {
-            <button
-              type="button"
-              class="w-8 h-8 flex items-center justify-center hover:bg-slate-700 rounded cursor-pointer text-lg"
-              (click)="selectEmoji(emoji)"
-            >
-              {{ emoji }}
-            </button>
-          }
-        </div>
+    <div
+      #container
+      class="p-2 bg-slate-800 rounded-lg shadow-xl border border-slate-700"
+    >
+      <div class="grid grid-cols-8 gap-1">
+        @for (emoji of emojis; track emoji) {
+          <button
+            type="button"
+            class="w-8 h-8 flex items-center justify-center hover:bg-slate-700 rounded cursor-pointer text-lg"
+            (click)="selectEmoji(emoji)"
+          >
+            {{ emoji }}
+          </button>
+        }
       </div>
-    }
+    </div>
   `,
   styles: [`
     :host {
@@ -39,9 +36,10 @@ import { AsyncPipe } from '@angular/common';
   ],
 })
 export class EmojiPickerComponent implements OnInit, OnDestroy {
-  readonly chatService = inject(ChatService);
 
   selected = output<string>();
+  clickOutside = output();
+
   container = viewChild<ElementRef>('container');
 
   readonly emojis = [
@@ -66,7 +64,7 @@ export class EmojiPickerComponent implements OnInit, OnDestroy {
     const element = this.container()?.nativeElement;
 
     if (element && !element.contains(event.target as Node)) {
-      this.chatService.setEmojiPickerVisible(false);
+      this.clickOutside.emit();
     }
   };
 }

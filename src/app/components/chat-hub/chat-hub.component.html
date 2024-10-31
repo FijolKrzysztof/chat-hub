@@ -130,7 +130,7 @@
             <button
               type="button"
               class="p-1 text-slate-400 hover:text-slate-300"
-              (click)="chatService.setEmojiPickerVisible(true)"
+              (click)="emojiPickerVisible.set(true)"
             >
               <app-icon [icon]="icons.smileIcon" className="w-4 h-4 md:w-5 md:h-5"/>
             </button>
@@ -146,7 +146,12 @@
             </button>
           </div>
 
-          <app-emoji-picker (selected)="onEmojiSelect($event)" />
+          @if (emojiPickerVisible()) {
+            <app-emoji-picker
+              (clickOutside)="emojiPickerVisible.set(false)"
+              (selected)="onEmojiSelect($event)"
+            />
+          }
         </div>
         <button
           type="submit"

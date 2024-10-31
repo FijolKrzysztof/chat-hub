@@ -14,7 +14,6 @@ export class ChatService {
 
   private readonly scrollToBottom = new BehaviorSubject<boolean>(false);
   private readonly isTyping = new BehaviorSubject<boolean>(false);
-  private readonly emojiPickerVisible = new BehaviorSubject<boolean>(false);
   private readonly chats = new BehaviorSubject<Chat[]>(CHAT_DATA);
   private readonly activeChat = new BehaviorSubject<Chat>(CHAT_DATA[0]);
   private readonly user = new BehaviorSubject<User>(this.DEFAULT_USER);
@@ -36,14 +35,6 @@ export class ChatService {
   triggerScroll(): void {
     this.scrollToBottom.next(true);
     setTimeout(() => this.scrollToBottom.next(false), 100);
-  }
-
-  getEmojiPickerVisible(): Observable<boolean> {
-    return this.emojiPickerVisible.asObservable();
-  }
-
-  setEmojiPickerVisible(visible: boolean): void {
-    this.emojiPickerVisible.next(visible);
   }
 
   getChats(): Observable<Chat[]> {

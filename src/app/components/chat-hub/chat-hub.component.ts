@@ -36,6 +36,7 @@ export class ChatHubComponent implements OnDestroy {
   message = '';
   icons = IconsComponent;
   showSidebar = signal(false);
+  emojiPickerVisible = signal(false);
 
   private scrollSub = this.chatService.getScrollToBottom().subscribe(shouldScroll => {
     if (shouldScroll) {
