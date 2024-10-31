@@ -30,6 +30,8 @@ export class ChatHubComponent implements OnInit {
   messagesEnd: Signal<ElementRef | undefined> = viewChild('messagesEnd');
   messageInput: Signal<ElementRef | undefined> = viewChild('messageInput');
 
+  private readonly destroy$ = takeUntilDestroyed();
+
   user$ = this.chatService.getUser();
   activeChat$ = this.chatService.getActiveChat();
   pinnedMessage$ = this.chatService.getPinnedMessage();
@@ -42,7 +44,7 @@ export class ChatHubComponent implements OnInit {
 
   ngOnInit() {
     this.chatService.getScrollToBottom().pipe(
-      takeUntilDestroyed(),
+      this.destroy$,
     ).subscribe(shouldScroll => {
       if (shouldScroll) {
         this.scrollToBottom();
