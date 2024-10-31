@@ -1,6 +1,6 @@
-# ChatHub - Real-time Chat Application
+# ChatHub - Real-time Chat Application Demo
 
-ChatHub is a modern, responsive chat application built with Angular and Tailwind CSS. It features a sleek dark mode interface, real-time messaging, and multiple chat channels.
+ChatHub is a modern, responsive chat application built with Angular and Tailwind CSS. It features a sleek dark mode interface, real-time messaging, and multiple chat channels. This project is a demo/mockup showcasing modern design patterns and UI interactions.
 
 ## Demo
 
