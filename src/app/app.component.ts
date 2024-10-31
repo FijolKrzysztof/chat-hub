@@ -22,7 +22,8 @@ export class AppComponent implements OnInit {
   readonly chatService = inject(ChatService);
 
   isExpanded$ = this.chatService.getIsExpanded();
-  icons = IconsComponent;
+
+  readonly Icons = IconsComponent;
 
   ngOnInit() {
     this.chatService.startSpamBot();

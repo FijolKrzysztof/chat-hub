@@ -18,12 +18,12 @@ export class ChatListComponent {
 
   chats$ = this.chatService.getChats();
   activeChat$ = this.chatService.getActiveChat();
-  icons = IconsComponent;
   searchQuery = '';
-
   filteredChats$ = this.chats$.pipe(
     map(chats => this.filterChats(chats))
   );
+
+  readonly Icons = IconsComponent;
 
   onSearchChange(query: string): void {
     this.searchQuery = query;

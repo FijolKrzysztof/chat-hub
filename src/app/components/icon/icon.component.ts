@@ -9,9 +9,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class IconComponent {
   readonly sanitizer = inject(DomSanitizer);
 
+  className = input('');
   icon = input.required<SafeHtml, string>({
     transform: (value: string) => this.sanitizer.bypassSecurityTrustHtml(value)
   });
-
-  className = input('');
 }

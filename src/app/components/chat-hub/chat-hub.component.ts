@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnDestroy, signal, Signal, viewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, signal, Signal, viewChild } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MessageComponent } from '../message/message.component';
@@ -8,6 +8,7 @@ import { IconsComponent } from '../icons/icons.component';
 import { ChatService } from '../../services/chat.service';
 import { TypingIndicatorComponent } from '../typing-indicator/typing-indicator.component';
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-chat-hub',
@@ -23,7 +24,7 @@ import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
   ],
   templateUrl: 'chat-hub.component.html',
 })
-export class ChatHubComponent implements OnDestroy {
+export class ChatHubComponent implements OnInit {
   readonly chatService = inject(ChatService);
 
   messagesEnd: Signal<ElementRef | undefined> = viewChild('messagesEnd');
@@ -34,18 +35,19 @@ export class ChatHubComponent implements OnDestroy {
   pinnedMessage$ = this.chatService.getPinnedMessage();
   isTyping$ = this.chatService.getIsTyping();
   message = '';
-  icons = IconsComponent;
   showSidebar = signal(false);
   emojiPickerVisible = signal(false);
 
-  private scrollSub = this.chatService.getScrollToBottom().subscribe(shouldScroll => {
-    if (shouldScroll) {
-      this.scrollToBottom();
-    }
-  });
+  readonly Icons = IconsComponent;
 
-  ngOnDestroy() {
-    this.scrollSub.unsubscribe();
+  ngOnInit() {
+    this.chatService.getScrollToBottom().pipe(
+      takeUntilDestroyed(),
+    ).subscribe(shouldScroll => {
+      if (shouldScroll) {
+        this.scrollToBottom();
+      }
+    });
   }
 
   toggleSidebar(): void {
@@ -87,7 +89,7 @@ export class ChatHubComponent implements OnDestroy {
   }
 
   addImage(): void {
-    this.chatService.addMessage(this.icons.placeholderImage);
+    this.chatService.addMessage(this.Icons.placeholderImage);
   }
 
   handleSubmit(): void {

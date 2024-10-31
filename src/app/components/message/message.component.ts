@@ -32,13 +32,13 @@ import { ChatService } from '../../services/chat.service';
             [class]="'p-1 transition-opacity ' +
               (isPinned() ? 'text-yellow-500' :
                'text-slate-400 hover:text-yellow-500 opacity-0 group-hover:opacity-100')">
-            <app-icon [icon]="icons.pinIcon" className="w-4 h-4"/>
+            <app-icon [icon]="Icons.pinIcon" className="w-4 h-4"/>
           </button>
           @if (isOwnMessage()) {
             <button
               (click)="handleDeleteMessage()"
               class="p-1 text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
-              <app-icon [icon]="icons.trashIcon" className="w-4 h-4"/>
+              <app-icon [icon]="Icons.trashIcon" className="w-4 h-4"/>
             </button>
           }
         </div>
@@ -54,7 +54,7 @@ export class MessageComponent {
   isOwnMessage = input.required<boolean>();
   isPinned = input.required<boolean>();
 
-  icons = IconsComponent;
+  readonly Icons = IconsComponent;
 
   get sanitizedMessage() {
     return this.sanitizer.bypassSecurityTrustHtml(this.message().text);

@@ -4,7 +4,7 @@
     class="absolute right-4 top-4 z-10 p-2 rounded-lg bg-slate-700/50 text-slate-300 hover:bg-slate-600/50 hover:text-white transition-colors hidden md:block"
   >
     <app-icon
-      [icon]="(chatService.getIsExpanded() | async) ? icons.minimizeIcon : icons.maximizeIcon"
+      [icon]="(chatService.getIsExpanded() | async) ? Icons.minimizeIcon : Icons.maximizeIcon"
       className="w-5 h-5"
     />
   </button>
@@ -16,7 +16,7 @@
         (click)="toggleSidebar()"
         class="p-2 text-slate-400 hover:text-slate-300"
       >
-        <app-icon [icon]="icons.menuIcon" className="w-5 h-5"/>
+        <app-icon [icon]="Icons.menuIcon" className="w-5 h-5"/>
       </button>
       <span class="ml-3 text-white font-medium">{{ (activeChat$ | async)?.name }}</span>
     </div>
@@ -25,7 +25,7 @@
       class="md:hidden p-2 text-slate-400 hover:text-slate-300"
     >
       <app-icon
-        [icon]="(chatService.getIsExpanded() | async) ? icons.minimizeIcon : icons.maximizeIcon"
+        [icon]="(chatService.getIsExpanded() | async) ? Icons.minimizeIcon : Icons.maximizeIcon"
         className="w-5 h-5"
       />
     </button>
@@ -39,7 +39,7 @@
     <div class="flex-shrink-0 p-4 border-b border-slate-700">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center">
-          <app-icon [icon]="icons.userIcon" className="w-5 h-5 text-white"/>
+          <app-icon [icon]="Icons.userIcon" className="w-5 h-5 text-white"/>
         </div>
         <div class="flex-1">
           <div class="font-medium text-white">{{ (user$ | async)?.name }}</div>
@@ -64,7 +64,7 @@
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-md bg-blue-600 flex items-center justify-center">
-              <app-icon [icon]="icons.hashIcon" className="w-5 h-5 text-white"/>
+              <app-icon [icon]="Icons.hashIcon" className="w-5 h-5 text-white"/>
             </div>
             <div>
               <h1 class="font-semibold text-white">{{ (activeChat$ | async)?.name }}</h1>
@@ -78,14 +78,14 @@
         <div class="bg-slate-700/50 border-b border-slate-700">
           <div class="p-3 max-w-3xl mx-auto flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <app-icon [icon]="icons.pinIcon" className="w-4 h-4 text-yellow-500"/>
+              <app-icon [icon]="Icons.pinIcon" className="w-4 h-4 text-yellow-500"/>
               <span class="text-sm text-slate-200">{{ pinnedMsg.text }}</span>
             </div>
             <button
               (click)="unpinMessage()"
               class="text-slate-400 hover:text-slate-300"
             >
-              <app-icon [icon]="icons.xIcon" className="w-4 h-4"/>
+              <app-icon [icon]="Icons.xIcon" className="w-4 h-4"/>
             </button>
           </div>
         </div>
@@ -132,17 +132,17 @@
               class="p-1 text-slate-400 hover:text-slate-300"
               (click)="emojiPickerVisible.set(true)"
             >
-              <app-icon [icon]="icons.smileIcon" className="w-4 h-4 md:w-5 md:h-5"/>
+              <app-icon [icon]="Icons.smileIcon" className="w-4 h-4 md:w-5 md:h-5"/>
             </button>
             <button
               type="button"
               class="p-1 text-slate-400 hover:text-slate-300"
               (click)="addImage()"
             >
-              <app-icon [icon]="icons.imageIcon" className="w-4 h-4 md:w-5 md:h-5"/>
+              <app-icon [icon]="Icons.imageIcon" className="w-4 h-4 md:w-5 md:h-5"/>
             </button>
             <button type="button" class="p-1 text-slate-400 hover:text-slate-300">
-              <app-icon [icon]="icons.paperclipIcon" className="w-4 h-4 md:w-5 md:h-5"/>
+              <app-icon [icon]="Icons.paperclipIcon" className="w-4 h-4 md:w-5 md:h-5"/>
             </button>
           </div>
 
@@ -157,7 +157,7 @@
           type="submit"
           class="px-3 md:px-4 py-2 md:py-2.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900"
         >
-          <app-icon [icon]="icons.sendIcon" className="w-4 h-4 md:w-5 md:h-5"/>
+          <app-icon [icon]="Icons.sendIcon" className="w-4 h-4 md:w-5 md:h-5"/>
         </button>
       </div>
     </form>
